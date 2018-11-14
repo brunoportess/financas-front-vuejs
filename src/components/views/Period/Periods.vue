@@ -1,5 +1,8 @@
 <template>
-    <div class="row">
+    <div class="loader text-center" v-if="isLoading">
+        <div class="lds-facebook"><div></div><div></div><div></div></div>
+    </div>
+    <div class="row" v-else>
       <PeriodForm :period="period" :showModal="showModal" @closeModal="closeModal" />
       <div class="col-12 mb-3">
         <h3 class="float-left">Períodos</h3>
@@ -49,7 +52,8 @@ export default {
     return {
       periods: [],
       period: {},
-      showModal: false
+      showModal: false,
+      isLoading: true
     }
   },
   created () {
@@ -60,6 +64,7 @@ export default {
       const response = await PeriodsRepository.get()
       console.log(JSON.stringify(response.data['data']))
       this.periods = response.data['data']
+      this.isLoading = false
     },
     deleteItem: function (id) {
       PeriodsRepository.delete(id).then(response => {

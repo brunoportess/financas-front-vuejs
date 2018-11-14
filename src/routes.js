@@ -1,16 +1,28 @@
 import Categories from './components/views/Category/Categories.vue'
 import Periods from './components/views/Period/Periods.vue'
+import Dashboard from './components/views/Dashboard/Dashboard.vue'
+import Finances from './components/views/Finance/Finances.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'category',
-    component: Categories
+    name: 'dashboard',
+    component: Dashboard
   },
   {
     path: '/periods',
     name: 'period',
     component: Periods
+  },
+  {
+    path: '/categories',
+    name: 'categories',
+    component: Categories
+  },
+  {
+    path: '/finances',
+    name: 'finances',
+    component: Finances
   }
 ]
 

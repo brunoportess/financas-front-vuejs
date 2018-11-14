@@ -20,7 +20,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <router-link to="/">
+                <router-link to="/finances">
                   <font-awesome-icon icon="hand-holding-usd" />
                   Lançamentos
                 </router-link>
@@ -28,7 +28,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <router-link to="/">
+                <router-link to="/categories">
                   <font-awesome-icon icon="list-alt" />
                   Categorias
                 </router-link>
@@ -61,6 +61,7 @@ export default {
 }
 </script>
 
-<style src="./_layout.css">
-
+<style>
+  @import './_layout.css';
+  @import './loaders.css';
 </style>

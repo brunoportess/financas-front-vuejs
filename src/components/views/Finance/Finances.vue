@@ -3,9 +3,9 @@
         <div class="lds-facebook"><div></div><div></div><div></div></div>
     </div>
     <div class="row" v-else>
-      <CategoryForm :category="category" :showModal="showModal" @closeModal="closeModal" />
+      <FinanceForm :finance="finance" :showModal="showModal" @closeModal="closeModal" />
       <div class="col-12 mb-3">
-        <h3 class="float-left">Categorias</h3>
+        <h3 class="float-left">Lançamentos</h3>
         <button class="btn btn-primary float-right" @click="openform()">ADICIONAR</button>
       </div>
         <div class="col-12">
@@ -20,7 +20,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="item in categories">
+                      <tr v-for="item in finances">
                         <th scope="row">1</th>
                         <td>{{item.name}}</td>
                         <td>
@@ -37,33 +37,34 @@
 </template>
 
 <script>
-import CategoryForm from './CategoryForm'
+import FinanceForm from './FinanceForm'
 import {RepositoryFactory} from './../../../components/_repositories/repositoryFactory'
-const categoryRepository = RepositoryFactory.get('categories')
+const financeRepository = RepositoryFactory.get('finances')
 export default {
   components: {
-    CategoryForm
+    FinanceForm
   },
   data: function () {
     return {
       isLoading: true,
-      categories: [],
-      category: {},
+      finances: [],
+      finance: {},
       showModal: false
     }
   },
   created () {
-    this.fetch()
+      this.isLoading = false
+    //this.fetch()
   },
   methods: {
     async fetch () {
-      const response = await categoryRepository.get()
+      const response = await financeRepository.get()
       console.log(JSON.stringify(response.data['data']))
       this.categories = response.data['data']
       this.isLoading = false
     },
     deleteItem: function (id) {
-      categoryRepository.delete(id).then(response => {
+      financeRepository.delete(id).then(response => {
         if(response.data['message'] == 'success')
           this.fetch()
         else
@@ -73,7 +74,7 @@ export default {
     openform: function (item = {}) {
       console.log(`SELECTED ITEM: ${JSON.stringify(item)}`)
       this.showModal = true
-      this.category = item
+      this.finance = item
     },
     closeModal: function (status, refresh) {
       this.showModal = status
