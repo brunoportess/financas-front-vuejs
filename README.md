@@ -1,4 +1,10 @@
-# financas
+# Finanças
+
+## Project description
+```
+Projeto de modelo de aplicação front-end utilizando vueJs e bootstrap 4.
+O projeto se trata de um controle pessoal de finanças básico para período, categoria e os lançamentos
+```
 
 ## Project setup
 ```
