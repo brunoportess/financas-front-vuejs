@@ -26,10 +26,13 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <div class="form-group">
+                            <div class="form-group vselect">
                                 <label for="category_id">Categoria</label>
-                                <v-select id="month" v-model="finance.month" :options="['foo','bar']"></v-select>
-                                
+                                <v-select id="category_id" v-model="finance.category" :options="categories" label="name">
+                                    <template slot="option" slot-scope="option">
+                                        {{ option.name }}
+                                    </template>
+                                </v-select>
                             </div>
                         </div>
                         <div class="col-6">
@@ -42,7 +45,7 @@
                 </div>
 
                 <div class="modal-footer">
-                <button type="submit" class="btn btn-info btn-fill btn-wd" @click.prevent="savePeriod">
+                <button type="submit" class="btn btn-info btn-fill btn-wd" @click.prevent="saveFinance">
                     Gravar
                 </button>
                 </div>
@@ -54,14 +57,45 @@
 
 <script>
 import {RepositoryFactory} from './../../../components/_repositories/repositoryFactory'
+const FinancesRepository = RepositoryFactory.get('finances')
+const CategoryRepository = RepositoryFactory.get('categories')
 const PeriodsRepository = RepositoryFactory.get('periods')
 export default {
+    data: function () {
+        return {
+            categorySelected: {},
+            periodSelected: {},
+            categories: [],
+            periods: []
+        }
+    },
+    created () {
+        this.loadItens()
+    },
     methods: {
-        savePeriod: function () {
-            console.log(this.period)
-            PeriodsRepository.save(this.period).then(response => {
+        async loadItens () {
+            console.log('finance form')
+            const responseCategories = await CategoryRepository.get()
+            if(responseCategories.data['message'] == 'success'){
+                this.categories = responseCategories.data['data']
+            }
+            else {
+              console.log(`${responseCategories.data['message']} - ${JSON.stringify(responseCategories.data['data'])}`)
+            }
+            const responsePeriods = await PeriodsRepository.get()
+            if(responsePeriods.data['message'] == 'success'){
+                this.periods = responsePeriods.data['data']
+            }
+            else {
+              console.log(`${responsePeriods.data['message']} - ${JSON.stringify(responsePeriods.data['data'])}`)
+            }
+        },
+        saveFinance: function () {
+            this.finance.category_id = this.finance.category_id.id
+            console.log(this.finance)
+            /*PeriodsRepository.save(this.period).then(response => {
                 this.$emit('closeModal', false, true)
-            })
+            })*/
         },
         closeModal: function () {
         this.$emit('closeModal', false, false)

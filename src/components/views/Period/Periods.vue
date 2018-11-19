@@ -62,8 +62,10 @@ export default {
   methods: {
     async fetch () {
       const response = await PeriodsRepository.get()
-      console.log(JSON.stringify(response.data['data']))
-      this.periods = response.data['data']
+      if(response.data['message'] == 'success') {
+        console.log(JSON.stringify(response.data['data']))
+        this.periods = response.data['data']
+      }
       this.isLoading = false
     },
     deleteItem: function (id) {

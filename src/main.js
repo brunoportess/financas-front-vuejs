@@ -13,6 +13,7 @@ library.add(faCoffee, faTachometerAlt, faHandHoldingUsd, faListAlt, faCalendarAl
 
 Vue.component('v-select', vSelect)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+import './assets/css/vselect.css'
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)

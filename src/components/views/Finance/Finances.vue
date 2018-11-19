@@ -15,14 +15,20 @@
                   <thead>
                       <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Nome</th>
+                      <th>Nome</th>
+                      <th>Valor</th>
+                      <th>Periodo</th>
+                      <th>Categoria</th>
                       <th></th>
                       </tr>
                   </thead>
                   <tbody>
                       <tr v-for="item in finances">
-                        <th scope="row">1</th>
+                        <th scope="row">{{item.id}}</th>
                         <td>{{item.name}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.period.name}}</td>
+                        <td>{{item.category.name}}</td>
                         <td>
                           <font-awesome-icon icon="edit" @click="openform(item)" />
                           <font-awesome-icon icon="trash" @click="deleteItem(item.id)" />
@@ -53,14 +59,17 @@ export default {
     }
   },
   created () {
-      this.isLoading = false
-    //this.fetch()
+    this.fetch()
   },
   methods: {
     async fetch () {
       const response = await financeRepository.get()
-      console.log(JSON.stringify(response.data['data']))
-      this.categories = response.data['data']
+      if(response.data['message'] == 'success'){
+        this.finances = response.data['data']
+      }
+      else {
+        console.log(`${response.data['message']} - ${JSON.stringify(response.data['data'])}`)
+      }
       this.isLoading = false
     },
     deleteItem: function (id) {
